@@ -1,12 +1,14 @@
 package com.lucashzs.api.storage.services;
 
 import com.lucashzs.api.storage.dtos.ProductDto;
+import com.lucashzs.api.storage.dtos.ProductUpdateDto;
 import com.lucashzs.api.storage.entities.Product;
 import com.lucashzs.api.storage.errors.exceptions.NotFoundException;
 import com.lucashzs.api.storage.repositories.ProductRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ProductService {
@@ -23,6 +25,7 @@ public class ProductService {
         return this.productRepository.findById(id).orElseThrow(() -> new NotFoundException("Product Not Found ID: " + id));
     }
 
+    @Transactional
     public ResponseEntity<Object> createProduct(ProductDto productDto) {
         var currentUser = authenticationService.getCurrentUser();
 
@@ -37,7 +40,16 @@ public class ProductService {
         return ResponseEntity.status(HttpStatus.CREATED).body("Created Product Successfully!");
     }
 
+    @Transactional
+    public ResponseEntity<Object> updateProduct (ProductUpdateDto productDto, Long id){
+        Product product = findById(id);
 
+        product.setName(productDto.name());
+        product.setSector(productDto.sector());
+
+        this.productRepository.save(product);
+        return ResponseEntity.status(HttpStatus.OK).body("Update Successfully");
+    }
 
 
 

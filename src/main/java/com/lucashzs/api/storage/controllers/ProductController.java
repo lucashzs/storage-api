@@ -1,6 +1,7 @@
 package com.lucashzs.api.storage.controllers;
 
 import com.lucashzs.api.storage.dtos.ProductDto;
+import com.lucashzs.api.storage.dtos.ProductUpdateDto;
 import com.lucashzs.api.storage.services.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -25,5 +26,10 @@ public class ProductController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> delete (@PathVariable Long id){
         return this.productService.deleteProduct(id);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> update (@RequestBody ProductUpdateDto productUpdateDto, @PathVariable Long id){
+        return productService.updateProduct(productUpdateDto, id);
     }
 }
