@@ -40,6 +40,14 @@ public class ProductService {
         return ResponseEntity.status(HttpStatus.CREATED).body("Created Product Successfully!");
     }
 
+    public ResponseEntity<ProductDto> getProduct(Long id) {
+        var product = productRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Product Not Found!"));
+        ProductDto productDto = new ProductDto(product.getName(), product.getSector(), product.getAmount());
+
+        return ResponseEntity.ok(productDto);
+    }
+
     @Transactional
     public ResponseEntity<Object> updateProduct(ProductUpdateDto productDto, Long id) {
         Product product = findById(id);
@@ -59,14 +67,5 @@ public class ProductService {
             throw new NotFoundException("Product Not Found!");
         }
         return ResponseEntity.status(HttpStatus.OK).body(String.format("Delete Product Successfully ID: %s", id));
-    }
-
-    public ResponseEntity<ProductDto> getProduct(Long id) {
-        var product = productRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Product Not Found!"));
-        ProductDto productDto = new ProductDto(product.getName(), product.getSector(), product.getAmount());
-
-        return ResponseEntity.ok(productDto);
-
     }
 }
