@@ -19,17 +19,22 @@ public class ProductController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Object> create (@RequestBody @Valid ProductDto productDto){
+    public ResponseEntity<Object> create(@RequestBody @Valid ProductDto productDto) {
         return this.productService.createProduct(productDto);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Object> delete (@PathVariable Long id){
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Object> delete(@PathVariable Long id) {
         return this.productService.deleteProduct(id);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Object> update (@RequestBody ProductUpdateDto productUpdateDto, @PathVariable Long id){
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Object> update(@RequestBody ProductUpdateDto productUpdateDto, @PathVariable Long id) {
         return productService.updateProduct(productUpdateDto, id);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ProductDto> getQuiz(@PathVariable Long id) {
+        return this.productService.getProduct(id);
     }
 }
