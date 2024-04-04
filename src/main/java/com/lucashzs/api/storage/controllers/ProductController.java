@@ -23,18 +23,19 @@ public class ProductController {
         return this.productService.createProduct(productDto);
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Object> delete(@PathVariable Long id) {
-        return this.productService.deleteProduct(id);
-    }
-
-    @PutMapping("/update/{id}")
-    public ResponseEntity<Object> update(@RequestBody ProductUpdateDto productUpdateDto, @PathVariable Long id) {
-        return productService.updateProduct(productUpdateDto, id);
-    }
-
     @GetMapping("/{id}")
     public ResponseEntity<ProductDto> getQuiz(@PathVariable Long id) {
         return this.productService.getProduct(id);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> update(@RequestBody ProductUpdateDto productUpdateDto, @PathVariable Long id) {
+        return productService.updateProduct(productUpdateDto, id);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> delete(@PathVariable Long id) {
+        return this.productService.deleteProduct(id);
+    }
+
 }
