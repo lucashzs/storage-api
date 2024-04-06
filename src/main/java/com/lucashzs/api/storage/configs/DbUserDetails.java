@@ -1,8 +1,8 @@
 package com.lucashzs.api.storage.configs;
 
+import com.lucashzs.api.storage.entities.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
@@ -12,7 +12,7 @@ public class DbUserDetails implements UserDetails {
 
     private final com.lucashzs.api.storage.entities.User user;
 
-    public DbUserDetails(com.lucashzs.api.storage.entities.User user) {
+    public DbUserDetails(User user) {
         this.user = user;
     }
 

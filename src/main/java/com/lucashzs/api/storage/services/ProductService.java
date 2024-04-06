@@ -1,5 +1,6 @@
 package com.lucashzs.api.storage.services;
 
+import com.lucashzs.api.storage.dtos.AddAmountDto;
 import com.lucashzs.api.storage.dtos.ProductDto;
 import com.lucashzs.api.storage.dtos.ProductUpdateDto;
 import com.lucashzs.api.storage.entities.Product;
@@ -46,6 +47,16 @@ public class ProductService {
         ProductDto productDto = new ProductDto(product.getName(), product.getSector(), product.getAmount());
 
         return ResponseEntity.ok(productDto);
+    }
+
+    public ResponseEntity<?> addAmount(Long id, AddAmountDto amountDto) {
+        Product product = productRepository.findById(id).orElse(null);
+        if (product == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Product Not Found!");
+        }
+        product.setAmount(product.getAmount() + amountDto.getAmount());
+        productRepository.save(product);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Added Amount Successfully!");
     }
 
     @Transactional

@@ -1,7 +1,9 @@
 package com.lucashzs.api.storage.controllers;
 
+import com.lucashzs.api.storage.dtos.AddAmountDto;
 import com.lucashzs.api.storage.dtos.ProductDto;
 import com.lucashzs.api.storage.dtos.ProductUpdateDto;
+import com.lucashzs.api.storage.entities.Product;
 import com.lucashzs.api.storage.services.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,11 @@ public class ProductController {
     @PostMapping("/create")
     public ResponseEntity<Object> create(@RequestBody @Valid ProductDto productDto) {
         return this.productService.createProduct(productDto);
+    }
+
+    @PostMapping("/{id}/add-amount")
+    public ResponseEntity<?> addAmount(@PathVariable Long id, @RequestBody AddAmountDto amountDto) {
+        return productService.addAmount(id, amountDto);
     }
 
     @GetMapping("/{id}")
